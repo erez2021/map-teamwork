@@ -1,5 +1,6 @@
 import { mapService } from './services/map-service.js'
 import { utilService } from './services/utils-service.js'
+import { storageService } from './services/storage-service.js'
 
 window.gMap;
 window.marker;
@@ -14,6 +15,8 @@ window.onload = () => {
         var elInputVal = document.querySelector('input').value;
         onAddressToGeo(elInputVal)
     })
+    renderLocations()
+    addBinEventListeners()
     document.querySelector('.btn').addEventListener('click', (ev) => {
         console.log('Aha!', ev.target);
         panTo(35.6895, 139.6917);
@@ -103,15 +106,41 @@ function onAddressToGeo(elInputVal){
             addMarker({ lat: coords.lat, lng: coords.lng });
             window.marker.addListener("click", () => {
                 mapService.geoToAddress(coords.lat, coords.lng)
+                renderLocations()
         });
     })  
 }
 
-function onRemoveFromLocation(idx){
-    mapService.removeFromLocation(idx);
-    renderLocations();
-}
+// function onRemoveFromLocation(idx){
+//     console.log('deleted');
+//     mapService.removeFromLocation(idx);
+//     renderLocations();
+// }
 
 function renderLocations(){
-    
+    const elList = document.querySelector('.location-list');
+    const locations = mapService.getLocations();
+    console.log('locations are',locations);
+    if(!locations || !locations.length) return;
+    const strHTML = locations.map((location, i) => {
+        return `<li>
+        <a href="#"> ${location.name} </a> 
+        <span data-idx="${i}" class="bin"> ♻ </span>
+        </li>`
+    })  
+    elList.innerHTML = strHTML.join(' ')
+}
+
+function addBinEventListeners(){
+    const elBins = document.querySelectorAll('.bin')
+    elBins.forEach((bin) => {
+        (function(){
+        bin.addEventListener('click', (ev) => {
+                const idx = +ev.target.dataset.idx;
+                console.log(idx);
+                mapService.removeFromLocation(idx);
+                renderLocations();
+            })
+        }())
+    })
 }
