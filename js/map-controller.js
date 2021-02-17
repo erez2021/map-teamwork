@@ -15,12 +15,20 @@ window.onload = () => {
         var elInputVal = document.querySelector('input').value;
         onAddressToGeo(elInputVal)
     })
+<<<<<<< HEAD
     renderLocations()
     addBinEventListeners()
     document.querySelector('.btn').addEventListener('click', (ev) => {
         console.log('Aha!', ev.target);
         panTo(35.6895, 139.6917);
     })
+=======
+    // document.querySelector('.btn').addEventListener('click', (ev) => {
+    //     console.log('Aha!', ev.target);
+    //     panTo(35.6895, 139.6917);
+    // })
+
+>>>>>>> 811adc725716212ec6d09ae036e15a4ce989fc90
     initMap()
         .then(() => {
             addMarker({ lat: 32.0749831, lng: 34.9120554 });
@@ -99,6 +107,19 @@ function _connectGoogleApi() {
     })
 }
 
+mapService.getWeather()
+.then(renderWeather)
+
+
+function renderWeather(weather) {
+    const elWeather = document.querySelector('.top-card')
+    var strHtml =  `<h2>${weather.wheather}</h2>
+    <h3>${weather.wind}</h3>`
+    elWeather.innerHTML = strHtml
+}
+
+
+ 
 function onAddressToGeo(elInputVal){
     mapService.addressToGeo(elInputVal)
         .then(coords => {
@@ -110,6 +131,7 @@ function onAddressToGeo(elInputVal){
         });
     })  
 }
+<<<<<<< HEAD
 
 // function onRemoveFromLocation(idx){
 //     console.log('deleted');
@@ -144,3 +166,5 @@ function addBinEventListeners(){
         }())
     })
 }
+=======
+>>>>>>> 811adc725716212ec6d09ae036e15a4ce989fc90

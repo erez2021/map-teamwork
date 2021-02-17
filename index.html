@@ -7,22 +7,29 @@
     <title>TravelTip</title>
 </head>
 <body>
-    <header>
+    <header class="flex">
     <h1>TravelTip</h1> 
+    <div class="upper-buttons">
+    <button>Enter Location</button>
+    <button>Go</button>
     <form>
         <input type="text" placeholder="Search for location" />
         <button>Go</button>
     </form>
     <button>My Location</button>
+</div>
 </header>
 
 <section class="lower-header">
+    <div class="location-title">
     <h3>Location:</h3><h4>Central Park</h4>
+</div>
     <button>Copy Location</button>
 </section>
 
 
     <div class="main-container">
+<<<<<<< HEAD
         <div class="cards">
             <div class="top-card">Weather Today</div>
             <div class="lower-card">
@@ -37,6 +44,17 @@
     <button class="btn">Click Me</button>
     
     <script src="lib/axios.js"></script>
+=======
+        <ul>
+        <li class="top-card">Weather Today</li>
+        <li class="lower-card">Locations Table</li>
+    </ul>
+        <div></div>
+    <div id="map" style="width: 400px; height: 400px;"></div>
+    
+</div>
+<script src="lib/axios.js"></script>
+>>>>>>> 811adc725716212ec6d09ae036e15a4ce989fc90
     <script type="module" src="js/map-controller.js"></script>
 </body>
 </html>

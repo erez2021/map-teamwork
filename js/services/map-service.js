@@ -27,7 +27,7 @@ function getLocs() {
 
 const W_KEY = 'b5fe3e631d79d729776cdbfd151f76ed'
 
-function getWeather(newLat, newLng) {
+function getWeather(newLat =30, newLng=30) {
     var prmWeather = axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${newLat}&lon=${newLng}&APPID=${W_KEY}`)
     .then(res => {
         return {
@@ -35,6 +35,7 @@ function getWeather(newLat, newLng) {
             wind: res.data.wind.speed
         }
     })
+    console.log('prmWeather:', prmWeather)
     return prmWeather
 }
 
