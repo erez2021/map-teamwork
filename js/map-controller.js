@@ -9,7 +9,11 @@ mapService.getLocs()
     .then(locs => console.log('locs', locs))
 
 window.onload = () => {
-    
+    document.querySelector('form').addEventListener('submit', (ev) => {
+        ev.preventDefault();
+        var elInputVal = document.querySelector('input').value;
+        onAddressToGeo(elInputVal)
+    })
     document.querySelector('.btn').addEventListener('click', (ev) => {
         console.log('Aha!', ev.target);
         panTo(35.6895, 139.6917);
@@ -91,4 +95,15 @@ function _connectGoogleApi() {
         elGoogleApi.onload = resolve;
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
+}
+
+function onAddressToGeo(elInputVal){
+    mapService.addressToGeo(elInputVal)
+        .then(coords => {
+            panTo(coords.lat, coords.lng);
+            addMarker({ lat: coords.lat, lng: coords.lng });
+            window.marker.addListener("click", () => {
+                mapService.geoToAddress(coords.lat, coords.lng)
+        });
+    })  
 }
