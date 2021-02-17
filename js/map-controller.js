@@ -109,7 +109,8 @@ mapService.getWeather()
 
 function renderWeather(weather) {
     const elWeather = document.querySelector('.top-card')
-    return `<h2>${weather}</h2>`
+    var strHtml =  `<h2>${weather}</h2>`
+    return elWeather.innerHTML = strHtml.join('')
 }
 
 

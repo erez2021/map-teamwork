@@ -12,6 +12,7 @@ body {
     height: 220px;
     border: 1px solid black;
     margin: 30px;
+    background-color: antiquewhite;
 }
 
 .lower-card {
@@ -20,8 +21,33 @@ body {
         height: 150px;
         border: 1px solid black;
         margin: 30px;
+        background-color: lightskyblue;
 }
 
 #map {
     display:flex
+}
+
+h1 {
+ 
+    display: inline-block;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.upper-Buttons {
+ align-content: center;
+ margin-right: 50px;
+}
+
+.lower-header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.location-title {
+    display: flex;
 }
