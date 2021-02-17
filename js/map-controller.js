@@ -42,24 +42,14 @@ window.onload = () => {
                     center: { lat, lng },
                     zoom: 15
                 })
-             
-                // infoWindow.open(gMap);
             window.gMap.addListener("click", (mapsMouseEvent) => {
                    const newLat = +JSON.stringify(mapsMouseEvent.latLng.toJSON().lat)
                    const newLng = +JSON.stringify(mapsMouseEvent.latLng.toJSON().lng)
-                  
                     window.marker.setMap(null);
                     panTo(newLat,newLng)
-                    console.log(parseInt(newLng));
                     addMarker({ lat: newLat, lng: newLng })
-                    mapService.geoToAddress(newLat, newLng)
-                   
                     window.marker.addListener("click", () => {
-                            // const newLocation = {
-                            //     id: utilService.makeId(),
-                                
-
-                            // }
+                        mapService.geoToAddress(newLat, newLng)
                      });
             })
         })
@@ -102,15 +92,3 @@ function _connectGoogleApi() {
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
 }
-
-mapService.getWeather()
-.then(weather => console.log(weather))
-.then(renderWeather)
-
-function renderWeather(weather) {
-    const elWeather = document.querySelector('.top-card')
-    return `<h2>${weather}</h2>`
-}
-
-
- 
