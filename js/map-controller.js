@@ -1,6 +1,8 @@
 import { mapService } from './services/map-service.js'
+import { utilService } from './services/utils-service.js'
 
-var gMap;
+window.gMap;
+window.marker;
 console.log('Main!');
 
 mapService.getLocs()
@@ -26,31 +28,48 @@ window.onload = () => {
         .catch(err => {
             console.log('err!!!', err);
         })
-}
-
-
-
-function initMap(lat = 32.0749831, lng = 34.9120554) {
-    console.log('InitMap');
-    return _connectGoogleApi()
+    }
+    
+    
+    
+    function initMap(lat = 32.0749831, lng = 34.9120554) {
+        console.log('InitMap');
+        return _connectGoogleApi()
         .then(() => {
             console.log('google available');
-            gMap = new google.maps.Map(
+            window.gMap = new google.maps.Map(
                 document.querySelector('#map'), {
-                center: { lat, lng },
-                zoom: 15
+                    center: { lat, lng },
+                    zoom: 15
+                })
+             
+                // infoWindow.open(gMap);
+            window.gMap.addListener("click", (mapsMouseEvent) => {
+                   const newLat = +JSON.stringify(mapsMouseEvent.latLng.toJSON().lat)
+                   const newLng = +JSON.stringify(mapsMouseEvent.latLng.toJSON().lng)
+                    window.marker.setMap(null);
+                    panTo(newLat,newLng)
+                    console.log(parseInt(newLng));
+                    addMarker({ lat: newLat, lng: newLng })
+                    mapService.geoToAddress(newLat, newLng)
+                    window.marker.addListener("click", () => {
+                            // const newLocation = {
+                            //     id: utilService.makeId(),
+                                
+
+                            // }
+                     });
             })
-            console.log('Map!', gMap);
         })
 }
 
 function addMarker(loc) {
-    var marker = new google.maps.Marker({
+    window.marker = new google.maps.Marker({
         position: loc,
         map: gMap,
         title: 'Hello World!'
     });
-    return marker;
+    return window.marker;
 }
 
 function panTo(lat, lng) {
@@ -70,7 +89,7 @@ function getPosition() {
 
 function _connectGoogleApi() {
     if (window.google) return Promise.resolve()
-    const API_KEY = 'AIzaSyAaio-UIw-8MZ7bNW7yIv2Rwfdu6ExkW3E'; //TODO: Enter your API Key
+    const API_KEY = 'AIzaSyDh4V0vPsJ6vUzqAnogu83nmHbm_nK48fA'; //TODO: Enter your API Key
     var elGoogleApi = document.createElement('script');
     elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`;
     elGoogleApi.async = true;
@@ -83,4 +102,17 @@ function _connectGoogleApi() {
 }
 
 
-
+  // Configure the click listener.
+  window.gMap.addListener("click", (mapsMouseEvent) => {
+      infoWindow.close();
+      // Create a new InfoWindow.
+      infoWindow = new google.maps.InfoWindow({
+        position: mapsMouseEvent.latLng,
+      });
+      infoWindow.setContent(
+        JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
+      );
+      infoWindow.open(gMap);
+    // Close the current InfoWindow.
+    console.log('hi');
+  });
