@@ -1,5 +1,5 @@
 import { mapService } from './services/map-service.js'
-import { storageService } from './services/utils-service.js'
+import { utilService } from './services/utils-service.js'
 
 window.gMap;
 window.marker;
@@ -94,13 +94,12 @@ function _connectGoogleApi() {
 }
 
 mapService.getWeather()
-.then(weather => console.log(weather))
 .then(renderWeather)
 
 function renderWeather(weather) {
     const elWeather = document.querySelector('.top-card')
     var strHtml =  `<h2>${weather}</h2>`
-    return elWeather.innerHTML = strHtml.join('')
+    elWeather.innerHTML = strHtml
 }
 
 
