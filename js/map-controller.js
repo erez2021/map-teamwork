@@ -9,11 +9,15 @@ mapService.getLocs()
     .then(locs => console.log('locs', locs))
 
 window.onload = () => {
-    
-    document.querySelector('.btn').addEventListener('click', (ev) => {
-        console.log('Aha!', ev.target);
-        panTo(35.6895, 139.6917);
+    document.querySelector('form').addEventListener('submit', (ev) => {
+        ev.preventDefault();
+        var elInputVal = document.querySelector('input').value;
+        onAddressToGeo(elInputVal)
     })
+    // document.querySelector('.btn').addEventListener('click', (ev) => {
+    //     console.log('Aha!', ev.target);
+    //     panTo(35.6895, 139.6917);
+    // })
 
     initMap()
         .then(() => {
@@ -96,11 +100,23 @@ function _connectGoogleApi() {
 mapService.getWeather()
 .then(renderWeather)
 
+
 function renderWeather(weather) {
     const elWeather = document.querySelector('.top-card')
-    var strHtml =  `<h2>${weather}</h2>`
+    var strHtml =  `<h2>${weather.wheather}</h2>
+    <h3>${weather.wind}</h3>`
     elWeather.innerHTML = strHtml
 }
 
 
  
+function onAddressToGeo(elInputVal){
+    mapService.addressToGeo(elInputVal)
+        .then(coords => {
+            panTo(coords.lat, coords.lng);
+            addMarker({ lat: coords.lat, lng: coords.lng });
+            window.marker.addListener("click", () => {
+                mapService.geoToAddress(coords.lat, coords.lng)
+        });
+    })  
+}
