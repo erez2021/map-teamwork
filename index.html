@@ -3,13 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ES6</title>
+    <link rel="stylesheet" href="css/main.css">
+    <title>TravelTip</title>
 </head>
 <body>
-    <h1>Map</h1>
-    <div id="map" style="width: 100%; height: 400px;"></div>
+    <header>
+    <h1>TravelTip</h1> 
+    <button>Enter Location</button>
+    <button>Go</button>
+    <button>My Location</button>
+</header>
+
+<section class="lower-header">
+    <h3>Location:</h3><h4>Central Park</h4>
+    <button>Copy Location</button>
+</section>
+
+
+    <div class="main-container">
+        <ul>
+        <li class="top-card">Weather Today</li>
+        <li class="lower-card">Locations Table</li>
+    </ul>
+        <div></div>
+    <div id="map" style="width: 400px; height: 400px;"></div>
     <button class="btn">Click Me</button>
-    
+</div>
     <script type="module" src="js/map-controller.js"></script>
 </body>
 </html>
