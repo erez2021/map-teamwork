@@ -1,5 +1,5 @@
 import { mapService } from './services/map-service.js'
-import { utilService } from './services/utils-service.js'
+import { storageService } from './services/utils-service.js'
 
 window.gMap;
 window.marker;
@@ -42,24 +42,14 @@ window.onload = () => {
                     center: { lat, lng },
                     zoom: 15
                 })
-             
-                // infoWindow.open(gMap);
             window.gMap.addListener("click", (mapsMouseEvent) => {
                    const newLat = +JSON.stringify(mapsMouseEvent.latLng.toJSON().lat)
                    const newLng = +JSON.stringify(mapsMouseEvent.latLng.toJSON().lng)
-                  
                     window.marker.setMap(null);
                     panTo(newLat,newLng)
-                    console.log(parseInt(newLng));
                     addMarker({ lat: newLat, lng: newLng })
-                    mapService.geoToAddress(newLat, newLng)
-                   
                     window.marker.addListener("click", () => {
-                            // const newLocation = {
-                            //     id: utilService.makeId(),
-                                
-
-                            // }
+                        mapService.geoToAddress(newLat, newLng)
                      });
             })
         })

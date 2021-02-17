@@ -4,9 +4,8 @@ export const mapService = {
     geoToAddress
 }
 
-// import {
-//     utilService
-// } from './storage-service.js'
+import { storageService } from './storage-service.js'
+import { utilService } from './utils-service.js'
 
 const KEY = 'locationsDB'
 
@@ -37,7 +36,17 @@ function getWeather(newLat, newLng) {
 }
 
 function geoToAddress(lat, lng) {
+    const locations = storageService.loadFromStorage(KEY) || [];
     axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyDh4V0vPsJ6vUzqAnogu83nmHbm_nK48fA`)
     .then(res => res.data.results[0].formatted_address)
-    .then(res => console.log(res))
+    .then((location) => {               
+        const newLocation = {
+            id: utilService.makeId(),
+                name: location,
+                lat,
+                lng
+            }
+            locations.push(newLocation)       
+            storageService.saveToStorage(KEY, locations)                                
+    })
 }
