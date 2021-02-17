@@ -82,5 +82,14 @@ function _connectGoogleApi() {
     })
 }
 
+mapService.getWeather()
+.then(weather => console.log(weather))
+.then(renderWeather)
+
+function renderWeather(weather) {
+    const elWeather = document.querySelector('.top-card')
+    return `<h2>${weather}</h2>`
+}
+
 
 
