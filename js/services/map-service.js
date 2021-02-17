@@ -1,6 +1,7 @@
 export const mapService = {
     getLocs,
-    getWeather
+    getWeather,
+    geoToAddress
 }
 
 // import {
@@ -24,8 +25,8 @@ function getLocs() {
 
 const W_KEY = 'b5fe3e631d79d729776cdbfd151f76ed'
 
-function getWeather() {
-    var prmWeather = axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${locs[0].lat}&lon=${locs[0].lng}&APPID=${W_KEY}`)
+function getWeather(newLat, newLng) {
+    var prmWeather = axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${newLat}&lon=${newLng}&APPID=${W_KEY}`)
     .then(res => {
         return {
             wheather: res.data.main.temp,
@@ -33,4 +34,10 @@ function getWeather() {
         }
     })
     return prmWeather
+}
+
+function geoToAddress(lat, lng) {
+    axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyDh4V0vPsJ6vUzqAnogu83nmHbm_nK48fA`)
+    .then(res => res.data.results[0].formatted_address)
+    .then(res => console.log(res))
 }
