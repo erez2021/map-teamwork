@@ -2,7 +2,8 @@ export const mapService = {
     getLocs,
     getWeather,
     geoToAddress,
-    addressToGeo
+    addressToGeo,
+    removeFromLocation
 }
 
 import { storageService } from './storage-service.js'
@@ -61,12 +62,17 @@ function addressToGeo(address){
     .then(res => res.data.results[0].geometry.location)
 }
 
-// function removeFromLocations(){
-//     const locations = storageService.loadFromStorage(KEY);
-//     if(!locations) return;
+function removeFromLocation(idx){
+    const locations = storageService.loadFromStorage(KEY);
+    if(!locations) return;
+    console.log(locations);
+    const foundIdx = locations.findIndex((location, i) => {
+        return idx === i
+    });
+    locations.splice(foundIdx, 1);
+    storageService.saveToStorage(KEY, locations)
+}
 
-// }
+function goToLocation(){
 
-// function goToLocation(){
-
-// }
+}

@@ -18,7 +18,6 @@ window.onload = () => {
         console.log('Aha!', ev.target);
         panTo(35.6895, 139.6917);
     })
-
     initMap()
         .then(() => {
             addMarker({ lat: 32.0749831, lng: 34.9120554 });
@@ -106,4 +105,13 @@ function onAddressToGeo(elInputVal){
                 mapService.geoToAddress(coords.lat, coords.lng)
         });
     })  
+}
+
+function onRemoveFromLocation(idx){
+    mapService.removeFromLocation(idx);
+    renderLocations();
+}
+
+function renderLocations(){
+    
 }

@@ -4,6 +4,12 @@ body {
 
 .main-container {
     display: flex;
+    justify-content: space-around;
+}
+
+.cards {
+    display: flex;
+    flex-direction: column;
 }
 
 .top-card {
